@@ -1,0 +1,22 @@
+@model GameState
+@{
+    ViewData["Title"] = "Production Event";
+}
+
+<div class="panel">
+    <h1>On the Set...</h1>
+    <p style="font-size:1.15rem;">@Model.EventText</p>
+
+    @if (Model.EventCost > 0)
+    {
+        <p class="text-bad">Extra cost: @Model.EventCost.ToString("C0")</p>
+    }
+    else
+    {
+        <p class="text-dim">No direct cost to production &mdash; just publicity.</p>
+    }
+
+    <form asp-controller="Game" asp-action="Event" method="post">
+        <button type="submit" class="btn btn-primary">Continue</button>
+    </form>
+</div>

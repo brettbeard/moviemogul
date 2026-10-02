@@ -1,0 +1,18 @@
+@model ErrorViewModel
+@{
+    ViewData["Title"] = "Error";
+}
+
+<div class="panel">
+    <h1 class="text-bad" style="color:var(--bad);border-color:var(--bad);">Something went wrong on the lot.</h1>
+    <p>Production has hit a snag. Try heading back to the title screen and starting a new picture.</p>
+
+    @if (Model.ShowRequestId)
+    {
+        <p class="text-dim">Request ID: <code>@Model.RequestId</code></p>
+    }
+
+    <div class="btn-row">
+        <a asp-controller="Home" asp-action="Index" class="btn btn-primary">Back to Title Screen</a>
+    </div>
+</div>

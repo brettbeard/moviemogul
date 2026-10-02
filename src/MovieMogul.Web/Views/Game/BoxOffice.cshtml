@@ -1,0 +1,42 @@
+@model GameState
+@{
+    ViewData["Title"] = "Box Office";
+    var movie = Model.SelectedMovie;
+}
+
+<div class="panel">
+    <h1>@movie.Title</h1>
+    <p class="text-dim">starring @string.Join(" and ", Model.Cast.OrderBy(c => c.RoleIndex).Select(c => c.Member.Name))</p>
+
+    <div style="margin-top:1.25rem;">
+        @foreach (var week in Model.BoxOfficeWeeks)
+        {
+            <div class="week-row">
+                <span>WEEK @week.Week</span>
+                <span>Weekly Gross &mdash; <strong>@week.WeeklyGross.ToString("C0")</strong></span>
+                <span class="text-gold">Total Gross &mdash; @week.RunningTotal.ToString("C0")</span>
+            </div>
+        }
+    </div>
+
+    @if (!Model.BoxOfficeFinished)
+    {
+        <form asp-controller="Game" asp-action="NextWeek" method="post" style="margin-top:1.5rem;">
+            <button type="submit" class="btn btn-primary">Advance to Week @Model.NextWeek</button>
+        </form>
+    }
+    else
+    {
+        <div class="panel" style="background:var(--bg-panel-raised); margin-top:1.5rem; margin-bottom:0;">
+            <p>@movie.Title has been pulled from theaters after @Model.BoxOfficeWeeks.Count weeks.</p>
+            <p>Subtotal = <span class="text-gold" style="font-size:1.2rem;">@Model.LifetimeGross.ToString("C0")</span></p>
+            @if (Model.LifetimeGross == 200_000m)
+            {
+                <p class="text-bad">That's a bomb.</p>
+            }
+        </div>
+        <div class="btn-row">
+            <a asp-controller="Game" asp-action="Awards" class="btn btn-primary">Continue to the Academy Awards</a>
+        </div>
+    }
+</div>

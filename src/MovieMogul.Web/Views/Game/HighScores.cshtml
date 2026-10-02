@@ -1,0 +1,65 @@
+@using MovieMogul.Web.Models
+@{
+    ViewData["Title"] = "High Scores";
+    var top = (List<HighScoreEntry>)ViewBag.Top;
+    var bottom = (List<HighScoreEntry>)ViewBag.Bottom;
+}
+
+<div class="panel">
+    <h1>Highest Profit</h1>
+    @if (top.Count == 0)
+    {
+        <p class="text-dim">No scores yet &mdash; be the first mogul in the books.</p>
+    }
+    else
+    {
+        <table class="retro-table">
+            <thead><tr><th>#</th><th>Movie</th><th>Producer</th><th>Profit</th></tr></thead>
+            <tbody>
+                @for (int i = 0; i < top.Count; i++)
+                {
+                    var h = top[i];
+                    <tr>
+                        <td>@(i + 1)</td>
+                        <td>@h.MovieTitle</td>
+                        <td>@h.DisplayName</td>
+                        <td class="@(h.NetProfit >= 0 ? "text-good" : "text-bad")">@h.NetProfit.ToString("C0")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>
+
+<div class="panel">
+    <h1>Biggest Bombs</h1>
+    @if (bottom.Count == 0)
+    {
+        <p class="text-dim">No scores yet.</p>
+    }
+    else
+    {
+        <table class="retro-table">
+            <thead><tr><th>#</th><th>Movie</th><th>Producer</th><th>Profit</th></tr></thead>
+            <tbody>
+                @for (int i = 0; i < bottom.Count; i++)
+                {
+                    var h = bottom[i];
+                    <tr>
+                        <td>@(i + 1)</td>
+                        <td>@h.MovieTitle</td>
+                        <td>@h.DisplayName</td>
+                        <td class="@(h.NetProfit >= 0 ? "text-good" : "text-bad")">@h.NetProfit.ToString("C0")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+
+    <div class="btn-row">
+        <form asp-controller="Game" asp-action="Start" method="post">
+            <button type="submit" class="btn btn-primary">Play Again</button>
+        </form>
+        <a asp-controller="Home" asp-action="Index" class="btn">Title Screen</a>
+    </div>
+</div>

@@ -1,0 +1,46 @@
+@using MovieMogul.Web.Data
+@model GameState
+@{
+    ViewData["Title"] = "Production Budget";
+    var movie = Model.SelectedMovie;
+}
+
+<div class="panel">
+    <h1>Production Budget</h1>
+    <p class="text-dim">@movie.Title</p>
+
+    <h3>Your Cast</h3>
+    <table class="retro-table" style="margin-bottom:1.25rem;">
+        <thead><tr><th>Role</th><th>Star</th><th>Salary</th></tr></thead>
+        <tbody>
+            @foreach (var c in Model.Cast.OrderBy(c => c.RoleIndex))
+            {
+                <tr>
+                    <td>@movie.Roles[c.RoleIndex].Name</td>
+                    <td>@c.Member.Name</td>
+                    <td>@c.Member.Salary.ToString("C0")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <p>Total cost of salaries: <strong class="text-gold">@Model.TotalSalaries.ToString("C0")</strong></p>
+
+    <hr class="divider" />
+
+    <p>How much do you want to spend on production?</p>
+    <p class="text-dim" style="font-size:0.9rem;">Between @movie.MinBudget.ToString("C0") and
+        @GameConstants.ProductionSpendCeiling.ToString("C0"). A bigger budget usually means a better picture
+        &mdash; but not always.</p>
+
+    <div asp-validation-summary="All" class="validation-summary-errors"></div>
+
+    <form asp-controller="Game" asp-action="Budget" method="post">
+        <div class="field">
+            <label for="spend">Production Spend</label>
+            <input class="input-retro" type="number" id="spend" name="spend" step="1000"
+                   min="@movie.MinBudget" max="@GameConstants.ProductionSpendCeiling"
+                   value="@movie.MinBudget" required />
+        </div>
+        <button type="submit" class="btn btn-primary">Greenlight the Picture</button>
+    </form>
+</div>

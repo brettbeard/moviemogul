@@ -1,0 +1,27 @@
+@model GameState
+@{
+    ViewData["Title"] = "The Reviews Are In";
+}
+
+<div class="panel">
+    <h1>The Reviews Are In...</h1>
+
+    @foreach (var review in Model.Reviews)
+    {
+        var cls = review.Verdict switch
+        {
+            "Loved it!" => "text-good",
+            "Liked it." => "text-cyan",
+            "Didn't like it." => "text-gold",
+            _ => "text-bad"
+        };
+        <div class="quote">
+            <span class="@cls" style="font-size:1.05rem;">&gt;@review.Verdict</span>
+            <cite>&mdash; @review.Reviewer</cite>
+        </div>
+    }
+
+    <form asp-controller="Game" asp-action="Reviews" method="post">
+        <button type="submit" class="btn btn-primary">Release the Movie</button>
+    </form>
+</div>

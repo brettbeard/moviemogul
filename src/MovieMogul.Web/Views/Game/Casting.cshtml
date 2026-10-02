@@ -1,0 +1,79 @@
+@model GameState
+@{
+    ViewData["Title"] = "Casting Call";
+    var movie = Model.SelectedMovie;
+}
+
+<div class="panel">
+    <h1>Casting Call</h1>
+    <p class="text-dim">for <span class="text-gold">@movie.Title</span></p>
+    <p>Twelve stars are available. Hire exactly three &mdash; one per role. Some roles are restricted by sex;
+        others aren't. Talent matters most at Oscar time; popularity drives box office; salary comes out of your
+        budget.</p>
+
+    <div asp-validation-summary="All" class="validation-summary-errors"></div>
+
+    <form asp-controller="Game" asp-action="Casting" method="post">
+        <div class="card-grid" style="margin-bottom:1.5rem;">
+            @for (int i = 0; i < movie.Roles.Count; i++)
+            {
+                var role = movie.Roles[i];
+                var restrictionLabel = role.Restriction switch
+                {
+                    RoleRestriction.MaleOnly => "Actor only",
+                    RoleRestriction.FemaleOnly => "Actress only",
+                    _ => "Either"
+                };
+                var eligible = Model.CastingPool.Where(c => role.Allows(c.Sex)).OrderBy(c => c.Name);
+
+                <div class="card">
+                    <h3>@role.Name</h3>
+                    <p class="text-dim" style="font-size:0.8rem;">@restrictionLabel</p>
+                    <div class="field" style="margin-bottom:0;">
+                        <label>Who will you cast as the @role.Name?</label>
+                        <select class="input-retro" name="roleSelections" required>
+                            <option value="">-- choose a star --</option>
+                            @foreach (var c in eligible)
+                            {
+                                <option value="@c.Name">@c.Name (@c.Salary.ToString("C0"))</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <button type="submit" class="btn btn-primary">Lock In Casting</button>
+    </form>
+</div>
+
+<div class="panel">
+    <h2>The Twelve Stars</h2>
+    <div style="overflow-x:auto;">
+        <table class="retro-table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Sex</th>
+                    <th>Age</th>
+                    <th>Talent</th>
+                    <th>Popularity</th>
+                    <th>Pay</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var c in Model.CastingPool.OrderBy(c => c.Name))
+                {
+                    <tr>
+                        <td>@c.Name</td>
+                        <td>@(c.Sex == Sex.Male ? "Actor" : "Actress")</td>
+                        <td>@c.AgeLabel</td>
+                        <td>@c.Talent</td>
+                        <td>@c.Popularity</td>
+                        <td>@c.Salary.ToString("C0")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

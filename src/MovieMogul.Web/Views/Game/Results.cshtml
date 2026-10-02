@@ -1,0 +1,51 @@
+@model GameState
+@{
+    ViewData["Title"] = "Profit & Loss";
+}
+
+<div class="panel">
+    <h1>Profit &amp; Loss Statement</h1>
+    <p class="text-dim">@Model.SelectedMovie.Title</p>
+
+    <table class="retro-table" style="margin-top:1rem;">
+        <tbody>
+            <tr><td>Total Cost</td><td>@Model.TotalCost.ToString("C0")</td></tr>
+            <tr><td>Box Office Revenue</td><td>@Model.LifetimeGross.ToString("C0")</td></tr>
+            @if (Model.ReReleaseRevenue > 0)
+            {
+                <tr><td>Re-release Revenue</td><td>@Model.ReReleaseRevenue.ToString("C0")</td></tr>
+            }
+            <tr><td><strong>Total Revenue</strong></td><td><strong>@Model.TotalRevenue.ToString("C0")</strong></td></tr>
+        </tbody>
+    </table>
+
+    @if (Model.NetProfit > 0)
+    {
+        <p style="font-size:1.4rem; margin-top:1.25rem;" class="text-good">YOU MADE A PROFIT OF @Model.NetProfit.ToString("C0")</p>
+    }
+    else if (Model.NetProfit < 0)
+    {
+        <p style="font-size:1.4rem; margin-top:1.25rem;" class="text-bad">YOU LOST @Math.Abs(Model.NetProfit).ToString("C0")</p>
+    }
+    else
+    {
+        <p style="font-size:1.4rem; margin-top:1.25rem;" class="text-gold">YOU CAME OUT EVEN!</p>
+    }
+
+    @if (Model.QualifiesForHighScore)
+    {
+        <p class="text-cyan">That performance earns you a spot on the high score list!</p>
+        <div class="btn-row">
+            <a asp-controller="Game" asp-action="HighScoreEntry" class="btn btn-primary">Enter Your Initials</a>
+        </div>
+    }
+    else
+    {
+        <div class="btn-row">
+            <form asp-controller="Game" asp-action="Start" method="post">
+                <button type="submit" class="btn btn-primary">Play Again</button>
+            </form>
+            <a asp-controller="Game" asp-action="HighScores" class="btn btn-gold">View High Scores</a>
+        </div>
+    }
+</div>

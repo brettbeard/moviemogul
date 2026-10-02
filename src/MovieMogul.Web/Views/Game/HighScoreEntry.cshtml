@@ -1,0 +1,20 @@
+@model GameState
+@{
+    ViewData["Title"] = "High Score";
+}
+
+<div class="panel">
+    <h1>You Made the List!</h1>
+    <p>@Model.SelectedMovie.Title &mdash; @(Model.NetProfit >= 0 ? "Profit" : "Loss") of @Math.Abs(Model.NetProfit).ToString("C0")</p>
+    <p class="text-dim">Please be honest and enter your own initials instead of somebody else's.</p>
+
+    <div asp-validation-summary="All" class="validation-summary-errors"></div>
+
+    <form asp-controller="Game" asp-action="HighScoreEntry" method="post">
+        <div class="field">
+            <label for="initials">Enter Your Initials</label>
+            <input class="input-retro" type="text" id="initials" name="initials" maxlength="3" style="max-width:120px; text-transform:uppercase;" required autofocus />
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>

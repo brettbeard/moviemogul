@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/MovieMogul.Web/MovieMogul.Web.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/MovieMogul.Tests/MovieMogul.Tests.csproj" />
+  </Folder>
+</Solution>

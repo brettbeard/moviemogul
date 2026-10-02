@@ -1,0 +1,34 @@
+@model GameState
+@{
+    ViewData["Title"] = "Pick a Script";
+}
+
+<div class="panel">
+    <h1>You have been sent three scripts</h1>
+    <p class="text-dim">Which do you want to produce?</p>
+
+    <div asp-validation-summary="All" class="validation-summary-errors"></div>
+
+    <form asp-controller="Game" asp-action="Script" method="post">
+        <div class="card-grid">
+            @for (int i = 0; i < Model.ScriptChoices.Count; i++)
+            {
+                var movie = Model.ScriptChoices[i];
+                <div class="card selectable">
+                    <h3>@movie.Title</h3>
+                    <p>@movie.SummaryLine1<br />@movie.SummaryLine2</p>
+                    <hr class="divider" />
+                    <p class="text-dim" style="font-size:0.85rem;">Roles==&gt;</p>
+                    <ul style="margin:0; padding-left:1.1rem; font-size:0.9rem;">
+                        @foreach (var role in movie.Roles)
+                        {
+                            <li>@role.Name</li>
+                        }
+                    </ul>
+                    <p class="text-dim" style="font-size:0.8rem; margin-top:0.6rem;">Min. production budget: @movie.MinBudget.ToString("C0")</p>
+                    <button type="submit" name="movieIndex" value="@i" class="btn btn-primary" style="margin-top:0.75rem; width:100%;">Produce This One</button>
+                </div>
+            }
+        </div>
+    </form>
+</div>

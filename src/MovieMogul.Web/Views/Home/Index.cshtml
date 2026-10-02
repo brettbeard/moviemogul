@@ -1,0 +1,80 @@
+@{
+    ViewData["Title"] = "Movie Mogul";
+}
+
+<div class="panel" style="text-align:center;">
+    <p class="badge">Copyright 1985 &middot; Chiang Brothers Software &middot; Web Recreation</p>
+    <h1 style="border:none;">Do you need instructions?</h1>
+    <p class="text-dim">MOVIE MOGUL sets you up as a big cheese producer. The resources of Hollywood are at your
+        disposal. Name stars are clamoring to do your pictures. Scripts are flooding in.</p>
+    <p class="text-dim">What will you do? Which script will benefit from your magic touch? Which stars will you
+        employ? How much money will you spend? Will you make money or lose it? Will your pic have legs, or be
+        n.s.g. (not so good, as they say in Daily Variety)? Was your casting astute enough to capture some Academy
+        Awards? Will you get rich, or go to the poorhouse?</p>
+    <p class="text-gold">Here's your big chance to find out. As they say in the biz &mdash; break a leg.</p>
+    <div class="btn-row" style="justify-content:center;">
+        <form asp-controller="Game" asp-action="Start" method="post">
+            <button type="submit" class="btn btn-primary">Skip Instructions &amp; Play</button>
+        </form>
+        <a href="#instructions" class="btn">Read Instructions First</a>
+        <a asp-controller="Game" asp-action="HighScores" class="btn btn-gold">High Scores</a>
+    </div>
+</div>
+
+<div class="panel" id="instructions">
+    <h2>Instructions</h2>
+
+    <h3>Script</h3>
+    <p>At the beginning of the game, you will be handed the scripts to three different movies. Read the
+        descriptions of the scripts carefully and decide which of the three you want to produce.</p>
+
+    <h3>Casting</h3>
+    <p>After selecting a script, you must hire actors to star in your film. A list of twelve available actors and
+        actresses and their salary demands will appear on the screen. You may hire only three of the twelve stars
+        listed.</p>
+    <p>When casting, consider how well an actor or actress is suited for the part. The amount of talent an actor
+        possesses is very important, especially during Oscar time. Also important is the popularity of the stars
+        you hire &mdash; a big star will demand a big salary, but will attract a big audience.</p>
+    <p>Some parts are restricted by sex while others aren't. Experiment to see which roles can be portrayed by
+        both an actor or an actress. Age should be taken into consideration, however the make-up men in Hollywood
+        can work their magic to make the old look young and the young look old.</p>
+
+    <h3>Production Cost</h3>
+    <p>The next step is to decide how much you want to spend making your movie. The amount of money you allot for
+        a film directly reflects its quality. A picture with high production quality will normally outperform a
+        cheap, low-budget movie. However, there are times when a small movie makes a huge profit and a big film
+        turns into an expensive failure. The total cost of your film will include the amount you spend on
+        production, the salaries you paid your three stars, plus any cost overruns.</p>
+
+    <h3>Reviews</h3>
+    <p>After your film is shot and before it is released to the public, there will be a special screening for the
+        critics. What the critics say about your film may affect its popularity at the box office. Unfortunately,
+        you have no control over them &mdash; so just read 'em and weep.</p>
+
+    <h3>Box Office</h3>
+    <p>Your picture is now ready for wide release. You will see a weekly total and a running grand total of
+        revenues. Some films will have 'legs' and their weekly take will drop very slowly. Other movies may have a
+        big opening week, but then fade away quickly. The smallest amount of revenue a film can generate is
+        $200,000. If that is all your film has made, then you have what we in the biz call a 'bomb'. Better luck
+        next time.</p>
+
+    <h3>Oscars</h3>
+    <p>No matter how poorly your film did, it will have a chance to win an Academy Award. Taking home an Oscar
+        means an opportunity to re-release your movie &mdash; the revenue generated from a re-release could be the
+        difference between making and losing money.</p>
+
+    <h3>High Scores</h3>
+    <p>At the end of the game you will be told how much you made or lost. If you did exceptionally well, you and
+        your film will enter the high score list. A really poor performance will give you the dishonorable
+        distinction of making the low score list. When identical movie titles appear on the high score list along
+        with the same initials, a marker will be added to distinguish between the two different films.</p>
+
+    <p class="text-gold" style="margin-top:1.5rem;">Good luck! And remember, you're only as good as your last
+        movie!</p>
+
+    <div class="btn-row">
+        <form asp-controller="Game" asp-action="Start" method="post">
+            <button type="submit" class="btn btn-primary">Start Producing</button>
+        </form>
+    </div>
+</div>

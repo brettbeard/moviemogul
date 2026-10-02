@@ -1,0 +1,22 @@
+@model GameState
+@{
+    ViewData["Title"] = "Sneak Preview";
+    var movie = Model.SelectedMovie;
+}
+
+<div class="panel" style="text-align:center;">
+    <p class="badge">Major Studio Sneak Preview</p>
+    <h1 style="border:none;">@movie.Title</h1>
+    <p class="text-dim">starring</p>
+    <p style="font-size:1.2rem;" class="text-gold">
+        @string.Join(" & ", Model.Cast.OrderBy(c => c.RoleIndex).Select(c => c.Member.Name))
+    </p>
+
+    <div style="margin:1.5rem 0;">
+        <span class="badge" style="font-size:1.1rem; padding:0.4rem 1rem;">Rated @Model.MpaaRating</span>
+    </div>
+
+    <form asp-controller="Game" asp-action="Preview" method="post">
+        <button type="submit" class="btn btn-primary">Hit Any Key to Release the Movie</button>
+    </form>
+</div>

@@ -1,0 +1,44 @@
+@model GameState
+@{
+    ViewData["Title"] = "Academy Awards";
+}
+
+<div class="panel" style="text-align:center;">
+    <p class="badge">The Academy of Motion Picture Arts and Sciences</p>
+    <h1 style="border:none;">Academy Awards Presentation</h1>
+    <p class="text-dim">cordially invites you to attend its annual ceremony.</p>
+</div>
+
+@foreach (var award in Model.AwardResults)
+{
+    <div class="panel">
+        <h3>@award.Category</h3>
+        <p class="text-dim">Here to present the award is @award.Presenter.</p>
+        @if (award.Won)
+        {
+            <p class="text-gold" style="font-size:1.2rem;">
+                The winner is @(award.WinnerName ?? Model.SelectedMovie.Title)!
+            </p>
+        }
+        else
+        {
+            <p class="text-dim">@Model.SelectedMovie.Title did not win this category.</p>
+        }
+    </div>
+}
+
+<div class="panel">
+    @if (Model.AwardResults.Any(a => a.Won))
+    {
+        <p>Because of the Oscars, your movie will be re-released.</p>
+        <p>The re-release grosses <span class="text-gold">@Model.ReReleaseRevenue.ToString("C0")</span></p>
+    }
+    else
+    {
+        <p class="text-dim">Your movie will not be re-released.</p>
+    }
+
+    <form asp-controller="Game" asp-action="Results" method="post">
+        <button type="submit" class="btn btn-primary">See the Final Tally</button>
+    </form>
+</div>

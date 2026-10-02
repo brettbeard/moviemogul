@@ -1,0 +1,28 @@
+## .NET
+bin/
+obj/
+*.user
+*.suo
+
+## SQLite high score DB (runtime data, not source)
+src/MovieMogul.Web/App_Data/*.db
+src/MovieMogul.Web/App_Data/*.db-*
+
+## VS / Rider / VS Code
+.vs/
+.vscode/
+*.userosscache
+*.sln.docstates
+
+## OS
+.DS_Store
+Thumbs.db
+
+## Original game reference material (not source code)
+*.DAT
+MOGUL.EXE
+MOGUL_addresses.txt
+MOGUL_strings.txt
+MOGUL_text.txt
+movie-mogul.jpg
+movie-mogul-2.jpg

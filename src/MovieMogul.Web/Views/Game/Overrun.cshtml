@@ -1,0 +1,36 @@
+@model GameState
+@{
+    ViewData["Title"] = "Budget Overrun";
+    var movie = Model.SelectedMovie;
+}
+
+<div class="panel">
+    <h1>Wrap</h1>
+
+    @if (Model.OverrunPercent == 0)
+    {
+        <p class="text-good">The movie comes in on budget.</p>
+    }
+    else
+    {
+        <p class="text-bad">The production went @((Model.OverrunPercent * 100).ToString("0")) % over budget.</p>
+    }
+
+    <table class="retro-table" style="margin-top:1rem;">
+        <tbody>
+            <tr><td>Production spend</td><td>@Model.ProductionSpend.ToString("C0")</td></tr>
+            <tr><td>Star salaries</td><td>@Model.TotalSalaries.ToString("C0")</td></tr>
+            @if (Model.EventCost > 0)
+            {
+                <tr><td>Event cost</td><td>@Model.EventCost.ToString("C0")</td></tr>
+            }
+            <tr><td>Overrun</td><td>@Model.OverrunAmount.ToString("C0")</td></tr>
+        </tbody>
+    </table>
+
+    <p style="font-size:1.3rem; margin-top:1rem;">TOTAL COST = <span class="text-gold">@Model.TotalCost.ToString("C0")</span></p>
+
+    <form asp-controller="Game" asp-action="Overrun" method="post">
+        <button type="submit" class="btn btn-primary">Continue</button>
+    </form>
+</div>

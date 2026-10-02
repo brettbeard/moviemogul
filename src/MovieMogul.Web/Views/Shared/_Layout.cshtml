@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Movie Mogul</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Monoton&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/retro.css" asp-append-version="true" />
+</head>
+<body>
+    <header class="site-header">
+        <p class="site-title"><a asp-controller="Home" asp-action="Index">Movie Mogul</a></p>
+        <nav class="site-nav">
+            <a asp-controller="Home" asp-action="Index">Title</a>
+            <a asp-controller="Game" asp-action="HighScores">High Scores</a>
+        </nav>
+    </header>
+    <div class="container-retro">
+        <main role="main">
+            @RenderBody()
+        </main>
+    </div>
+    <footer class="site-footer">
+        Movie Mogul &mdash; a browser recreation of the 1985 Chiang Brothers Software shareware game. Nostalgia project, not affiliated with the original publisher.
+    </footer>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
